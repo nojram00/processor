@@ -1,6 +1,7 @@
 from apscheduler.schedulers.blocking import BlockingScheduler
 from apscheduler.schedulers.background import BackgroundScheduler
 import requests
+from http.server import HTTPServer, SimpleHTTPRequestHandler
 import json
 
 
@@ -50,11 +51,18 @@ def update_video_title(title : str):
 
 print("Running....")
 
+def run_dummy(port):
+    httpd = HTTPServer(('', port), SimpleHTTPRequestHandler)
+    print(f"Server running on port {port}")
+    httpd.serve_forever()
+
 scheduler = BackgroundScheduler()
 
 scheduler.add_job(fetch_and_modify_video, 'interval', hours=12)
 
 scheduler.start()
+
+run_dummy(8000)
 
 try:
     while True:
