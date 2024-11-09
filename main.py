@@ -60,7 +60,7 @@ def run_dummy(port):
 
 scheduler = BackgroundScheduler()
 
-scheduler.add_job(fetch_and_modify_video, 'interval', hours=12)
+scheduler.add_job(fetch_and_modify_video, 'interval', hours=12, max_instances=3)
 
 scheduler.start()
 
