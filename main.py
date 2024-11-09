@@ -2,8 +2,7 @@ from apscheduler.schedulers.blocking import BlockingScheduler
 from apscheduler.schedulers.background import BackgroundScheduler
 import requests
 from http.server import HTTPServer, SimpleHTTPRequestHandler
-import json
-
+from db import save_log
 
 HOST_URL = "https://my-fucking-service.onrender.com"
 
@@ -44,6 +43,9 @@ def update_video_title(title : str):
         response = requests.post(f"{HOST_URL}/update-video", json=data)
 
         response.raise_for_status()
+
+        save_log(f"Title updated: '{data['title']}'")
+
 
     except Exception as e:
         print(f"Error: {e}")
